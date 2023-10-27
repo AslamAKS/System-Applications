@@ -1,0 +1,22 @@
+.root{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    gap: 20px;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+
+}
+
+
+
+.icon{
+    width: 300px;
+    height: 300px;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px;
+    background-color: rgb(59, 177, 190);
+}

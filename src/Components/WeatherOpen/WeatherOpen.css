@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');
+
+.WeatherOpen{
+    font-family: 'Josefin Sans', sans-serif;
+    background-image: url('https://images.pexels.com/photos/2086917/pexels-photo-2086917.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-size: cover;
+    height: 100vh;
+}
