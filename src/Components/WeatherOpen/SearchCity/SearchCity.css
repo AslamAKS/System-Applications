@@ -1,0 +1,41 @@
+.search{
+  align-items: center;
+  justify-content: center;
+}
+  
+  input{
+    height: 50px;
+    width: 70%;
+    padding: 10px;
+    border-radius: 20px;
+    margin: 10px;
+    background-color: transparent;
+    border-color: white;
+    color: white;
+  }
+  
+  .dataResult {
+    position: absolute;
+    margin: 10px;
+    width: 70%;
+    height: max-content;
+    background-color: rgba(255, 255, 255, 0.667);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    overflow: hidden;
+    overflow-y: auto;
+    color: black;
+    z-index: 9;
+
+  }
+  
+  .dataResult::-webkit-scrollbar {
+    display: none;
+  }
+  
+  
+  
+  h5:hover {
+    background-color: lightgrey;
+  }
+  
+  

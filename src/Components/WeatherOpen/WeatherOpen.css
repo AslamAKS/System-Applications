@@ -1,8 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@700&display=swap');
 
 .WeatherOpen{
-    font-family: 'Josefin Sans', sans-serif;
-    background-image: url('https://images.pexels.com/photos/2086917/pexels-photo-2086917.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
-    background-size: cover;
+    font-family: 'Dosis', sans-serif;
+    background: rgb(141,67,189);
+background: linear-gradient(180deg, rgba(141,67,189,1) 20%, rgba(225,198,244,1) 91%);
     height: 100vh;
+    display: flex;
+    padding: 10px;
+    margin: auto;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.backToHome{
+    width: 70px;
+    height: 70px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 20px;
+    top: 20px;
+    position: fixed;
 }

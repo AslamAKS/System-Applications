@@ -1,0 +1,15 @@
+.searchCity{
+    position: relative;
+    width: 30%;
+    height: 70vh;
+    background-image: url('https://i.pinimg.com/originals/5b/12/9d/5b129de44c25ee014c31ad03590458d8.jpg');
+    background-size: cover;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px black;
+    color: white;
+}
+
+
+.noData{
+    z-index: 9;
+}

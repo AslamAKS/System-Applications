@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./Calculator.css";
 import { IoIosMenu } from "react-icons/io";
 import { RxCross1, RxBox } from "react-icons/rx";
@@ -6,6 +7,7 @@ import { BsBackspace } from "react-icons/bs";
 import { PiDivideLight } from "react-icons/pi";
 import { GoDash, GoPlus } from "react-icons/go";
 import { TbSquareRoot2 } from "react-icons/tb";
+import {FcHome} from 'react-icons/fc'
 
 function Calculator() {
   const [current, setCurrent] = useState("");
@@ -32,48 +34,12 @@ function Calculator() {
     }
   };
 
-  const appendValueHandler = (el) => {
-    const value = el;
-    console.log("here is the value", value);
-    if (value === "." && current.includes(".")) return;
-    if (current.length < 12) setCurrent(current + value);
-  };
-
-  const chooseOperationHandler = (el) => {
-    if (current === "") {
-      return;
-    }
-    if (current === ".") {
-      return;
-    }
-    if (prevoius !== "") {
-    setPrevoius(current);
-    setOperations(el);
-      let value = compute();
-      setPrevoius(value);
-    } else {
-    setOperations(el);
-    setPrevoius(current);
-    }
-    setCurrent("");
-  };
-
-  const equalHandler = (value) => {
-    if (value === undefined || current === undefined || value == null) return;
-    if (value === "=") {
-      if(current==='') return;
-      let ans = compute();
-      setOperations(operations + current + value);
-      setCurrent(ans);
-    }
-    
-  };
-
   const calculateRoot = () => {
     try {
-      let prv = current;
+      setPrevoius(current)
+      let prv = current ? prevoius : current;
       const result = Math.sqrt(parseFloat(current));
-      setCurrent(result.toFixed(10));
+      setCurrent(result);
       setPrevoius("root(" + prv + ")");
     } catch (error) {
       setCurrent("Invalid Input");
@@ -91,7 +57,8 @@ function Calculator() {
 
   const calculateReciprocal = () => {
     try {
-      let val = current;
+      setPrevoius(current)
+      let val = current ? prevoius : current;
       const result = (1 / parseFloat(current)).toString();
       setCurrent(result);
       setPrevoius("1/(" + val + ")");
@@ -102,9 +69,10 @@ function Calculator() {
 
   const calculateSquare = () => {
     try {
-      let sqr = current;
-      const result = (parseFloat(current) ** 2).toString();
-      setCurrent(result.toFixed(10));
+      setPrevoius(current)
+      let sqr = current ? prevoius : current;
+      const result = (parseFloat(current) * parseFloat(current))
+      setCurrent(result);
       setPrevoius("sqr(" + sqr + ")");
     } catch (error) {
       setCurrent("ERROR");
@@ -137,6 +105,46 @@ function Calculator() {
     }
     return result;
   };
+
+
+
+  const appendValueHandler = (el) => {
+    const value = el;
+    console.log("here is the value", value);
+    if (value === "." && current.includes(".")) return;
+    if (current.length < 12) setCurrent(current + value);
+  };
+
+  const chooseOperationHandler = (el) => {
+    if (current === "") {
+      return;
+    }
+    if (current === ".") {
+      return;
+    }
+    if (prevoius !== "") {
+      setPrevoius(current);
+      setOperations(el);
+      let value = compute();
+      setPrevoius(value);
+    } else {
+    setPrevoius(current);
+    setOperations(el);
+  }
+    setCurrent("");
+  };
+
+  const equalHandler = (value) => {
+    if (value === undefined || current === null || value == null) return;
+    if (value === "=") {
+      if(current==='') return;
+      let ans = compute();
+      setOperations(operations + current + value);
+      setCurrent(ans);
+    }
+  };
+
+
 
   let buttons = [
     {
@@ -268,6 +276,11 @@ function Calculator() {
 
   return (
     <div className="main">
+      <div className="backToHome">
+        <Link to='/'>
+        <FcHome style={{width:'50px',height:'50px'}}/>
+        </Link>
+      </div>
       <div className="calculator">
         <div className="display">
           <div
@@ -310,7 +323,9 @@ function Calculator() {
               {prevoius}
               {operations}
             </div>
-            <p className="h1">{current ? current : "0"}</p>
+            <div className="h1">
+              {current ? current : '0' }
+            </div>
           </div>
         </div>
         <div className="numberpad">
