@@ -116,6 +116,10 @@ h5{
     text-align: end;
     font-weight: lighter;
     margin: 5px;
+    font-size: auto; /* Let the browser automatically adjust font size */
+  overflow: hidden; /* Hide overflow text */
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+  text-overflow: ellipsis;
 }
 .h1{
     text-align: end;
@@ -127,5 +131,4 @@ h5{
   overflow: hidden;
   font-size: 2.5rem;
 
-  font-size: 1.5rem;
 }
