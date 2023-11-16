@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import CurrentCity from "./CurrentCity/CurrentCity";
 import "./WeatherOpen.css";
-import SearchContext from "../Context/SearchContext";
 import Search from "./SearchCity/Search";
 import {FcHome} from 'react-icons/fc'
 
@@ -14,10 +13,8 @@ function WeatherOpen() {
         <FcHome style={{width:'50px',height:'50px'}}/>
         </Link>
       </div>
-      <SearchContext>
         <CurrentCity />
         <Search/>
-      </SearchContext>
     </div>
   );
 }

@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { TbTemperatureCelsius } from "react-icons/tb";
-import { ContextSearch } from "../../Context/SearchContext";
+import { ContextApp } from "../../../AppContext/AppContext";
 import humidity from "../Assets/humidity.png";
 import wind from "../Assets/wind.png";
 import pressure from "../Assets/cloudy.png";
 import "./SearchCityResult.css";
 
 function SearchCityResult() {
-  const { weatherData, dataAvailable } = useContext(ContextSearch);
+  const { weatherData, dataAvailable } = useContext(ContextApp);
 
   return (
     <div>

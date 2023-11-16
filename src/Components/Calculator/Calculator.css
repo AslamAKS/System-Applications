@@ -113,12 +113,16 @@ h5{
     margin-left: 10px;
 }
 .h4{
-    text-align: end;
-    font-weight: lighter;
-    margin: 5px;
-    font-size: auto; /* Let the browser automatically adjust font size */
-  overflow: hidden; /* Hide overflow text */
-  white-space: nowrap; /* Prevent text from wrapping to the next line */
+    display: flex;
+  gap: 5px;
+  height: 30px;
+  text-align: end;
+  justify-content: flex-end;
+  font-weight: lighter;
+  margin: 5px;
+  font-size: auto;
+  overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
 .h1{

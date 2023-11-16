@@ -5,6 +5,8 @@ import { FcCalculator, FcGlobe } from "react-icons/fc";
 
 function HomePage() {
   return (
+    
+
     <div className="root">
       <Link
         to="/calculator"
@@ -22,6 +24,7 @@ function HomePage() {
         </div>
       </Link>
     </div>
+    
   );
 }
 

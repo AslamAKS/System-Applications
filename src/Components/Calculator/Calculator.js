@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import "./Calculator.css";
 import { IoIosMenu } from "react-icons/io";
 import { RxCross1, RxBox } from "react-icons/rx";
@@ -6,213 +7,280 @@ import { BsBackspace } from "react-icons/bs";
 import { PiDivideLight } from "react-icons/pi";
 import { GoDash, GoPlus } from "react-icons/go";
 import { TbSquareRoot2 } from "react-icons/tb";
+import { FcHome } from "react-icons/fc";
+import { ContextApp } from "../../AppContext/AppContext";
 
 function Calculator() {
-  const [current, setCurrent] = useState("");
-  const [prevoius, setPrevoius] = useState("");
-  const [operations, setOperations] = useState("");
-  const [seconNum, setSecondNum] = useState("");
-  const [equal, setEqual] = useState("");
-  const [math, setMath] = useState("");
+  const { calculator, updateCalculator } = useContext(ContextApp);
 
   const deleteHandler = (value) => {
     if (value === "dl") {
-      setCurrent(String(current).slice(0, -1));
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        current: String(calculator.current).slice(0, -1),
+      }));
     }
   };
 
   const allclearHandler = (value) => {
     if (value === "CE") {
-      setCurrent("");
-      setOperations("");
-      setPrevoius("");
-      setEqual("");
-      setSecondNum("");
-      setMath("");
+      updateCalculator(() => ({
+        current: "",
+        operations: "",
+        prevoius: "",
+        equal: "",
+        seconNum: "",
+        math: "",
+      }));
     }
   };
 
   const clearCurrent = (value) => {
     if (value === "C") {
-      setCurrent("");
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        current: "",
+      }));
     }
   };
 
   const calculatePercentage = () => {
     try {
-      const result = (parseFloat(current) / 100).toString();
+      const result = (parseFloat(calculator.current) / 100).toString();
 
-      if (!operations) {
-        setEqual("");
-        setOperations("");
-        setSecondNum("");
-        setPrevoius("0");
-        setCurrent("0");
-      } else if (equal) {
-        setEqual("");
-        setOperations("");
-        setSecondNum("");
-        setCurrent(result);
-        setPrevoius(result);
+      if (!calculator.operations) {
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          equal: "",
+          operations: "",
+          seconNum: "",
+          prevoius: "0",
+          current: "0",
+        }));
+      } else if (calculator.equal) {
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          equal: "",
+          operations: "",
+          seconNum: "",
+          prevoius: result,
+          current: result,
+        }));
       } else {
-        setCurrent(result);
-        setSecondNum(result);
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          current: result,
+          seconNum: result,
+        }));
       }
     } catch (error) {
-      setCurrent("ERROR");
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        current: "ERROR",
+      }));
     }
   };
 
   const calculateRoot = () => {
     try {
-      if (prevoius && operations) {
-        setSecondNum(math);
-        if (equal) {
-          setEqual("");
-          setOperations("");
-          setSecondNum("");
-          setPrevoius("");
-          setMath("");
+      if (calculator.prevoius && calculator.operations) {
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          seconNum: calculator.math,
+        }));
+        if (calculator.equal) {
+          updateCalculator((prevCalculator) => ({
+            ...prevCalculator,
+            equal: "",
+            operations: "",
+            seconNum: "",
+            prevoius: "",
+            math: "",
+          }));
         }
       } else {
-        setEqual("");
-        setOperations("");
-        setSecondNum("");
-        setPrevoius("");
-        setMath("");
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          equal: "",
+          operations: "",
+          seconNum: "",
+          prevoius: "",
+          math: "",
+        }));
       }
-      if(current<0){
-        setCurrent('Invalid Input')
+      if (calculator.current < 0) {
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          current: "Invalid Input",
+        }));
       }
-      // setPrevoius(current)
-      let prv = current ? math : current;
-      const result = Math.sqrt(parseFloat(current));
-      setCurrent(result);
-      if (math === "") {
-        setMath("root(" + current + ")");
+      let prv = calculator.current ? calculator.math : calculator.current;
+      const result = Math.sqrt(parseFloat(calculator.current));
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        current: result,
+      }));
+      if (calculator.math === "") {
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          math: "root(" + calculator.current + ")",
+        }));
       } else {
-        setMath("root(" + prv + ")");
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          math: "root(" + prv + ")",
+        }));
       }
     } catch (error) {
-      setCurrent("Invalid Input");
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        current: "Invalid Input",
+      }));
     }
   };
 
   const calculateReciprocal = () => {
     try {
-      if (prevoius && operations) {
-        setSecondNum(math);
-        if (equal) {
-          setEqual("");
-          setOperations("");
-          setSecondNum("");
-          setPrevoius("");
-          setMath("");
+      if (calculator.prevoius && calculator.operations) {
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          seconNum: calculator.math,
+        }));
+        if (calculator.equal) {
+          updateCalculator((prevCalculator) => ({
+            ...prevCalculator,
+            equal: "",
+            operations: "",
+            seconNum: "",
+            prevoius: "",
+            math: "",
+          }));
         }
       } else {
-        setEqual("");
-        setOperations("");
-        setSecondNum("");
-        setPrevoius("");
-        setMath("");
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          equal: "",
+          operations: "",
+          seconNum: "",
+          prevoius: "",
+          math: "",
+        }));
       }
 
-      let val = current ? math : current;
-      const result = (1 / parseFloat(current)).toString();
-      setCurrent(result);
-      if (math === "") {
-        setMath("1/(" + current + ")");
+      let val = calculator.current ? calculator.math : calculator.current;
+      const result = (1 / parseFloat(calculator.current)).toString();
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        current: result,
+      }));
+      if (calculator.math === "") {
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          math: "1/(" + calculator.current + ")",
+        }));
       } else {
-        setMath("1/(" + val + ")");
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          math: "1/(" + val + ")",
+        }));
       }
     } catch (error) {
-      setCurrent("ERROR");
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        current: "ERROR",
+      }));
     }
   };
 
   const calculateSquare = () => {
     try {
-      if (prevoius && operations) {
-        setSecondNum(math);
-        if (equal) {
-          setEqual("");
-          setOperations("");
-          setSecondNum("");
-          setPrevoius("");
-          setMath("");
+      if (calculator.prevoius && calculator.operations) {
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          seconNum: calculator.math,
+        }));
+        if (calculator.equal) {
+          updateCalculator((prevCalculator) => ({
+            ...prevCalculator,
+            equal: "",
+            operations: "",
+            seconNum: "",
+            prevoius: "",
+            math: "",
+          }));
         }
       } else {
-        setEqual("");
-        setOperations("");
-        setSecondNum("");
-        setPrevoius("");
-        setMath("");
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          equal: "",
+          operations: "",
+          seconNum: "",
+          prevoius: "",
+          math: "",
+        }));
       }
-      let sqr = current ? math : current;
-      const result = parseFloat(current) * parseFloat(current);
-      setCurrent(result);
-      if (math === "") {
-        setMath("sqr(" + current + ")");
+      let sqr = calculator.current ? calculator.math : calculator.current;
+      const result =
+        parseFloat(calculator.current) * parseFloat(calculator.current);
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        current: result,
+      }));
+      if (calculator.math === "") {
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          math: "sqr(" + calculator.current + ")",
+        }));
       } else {
-        setMath("sqr(" + sqr + ")");
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          math: "sqr(" + sqr + ")",
+        }));
       }
     } catch (error) {
-      setCurrent("ERROR");
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        current: "ERROR",
+      }));
     }
   };
 
   const signChange = () => {
-    if (current === "") return;
-    if (equal) {
-      setEqual("");
-      setOperations("");
-      setSecondNum("");
-      setPrevoius("");
-      setMath("negate(" + current + ")");
-      setCurrent(-current);
+    if (calculator.current === "") return;
+    if (calculator.equal) {
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        equal: "",
+        operations: "",
+        seconNum: "",
+        prevoius: "",
+        math: "negate(" + calculator.current + ")",
+        current: -calculator.current,
+      }));
     }
-    if (math === "") {
-      setMath("negate(" + current + ")");
+    if (calculator.math === "") {
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        math: "negate(" + calculator.current + ")",
+      }));
     } else {
-      setMath("negate(" + math + ")");
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        math: "negate(" + calculator.math + ")",
+      }));
     }
-    setCurrent(-current);
-    // try {
-    //   if (prevoius && operations) {
-    //     setSecondNum(math);
-    //     if (equal) {
-    //       setEqual("");
-    //       setOperations("");
-    //       setSecondNum("");
-    //       setPrevoius("");
-    //       setMath("");
-    //     }
-    //   } else {
-    //     setEqual("");
-    //     setOperations("");
-    //     setSecondNum("");
-    //     setPrevoius("");
-    //     setMath("");
-    //   }
-    //   let sqr = current ? math : current;
-    //   const result = -current;
-    //   setCurrent(result);
-    //   if (math === "") {
-    //     setMath("sqr(" + current + ")");
-    //   } else {
-    //     setMath("sqr(" + sqr + ")");
-    //   }
-    // } catch (error) {
-    //   setCurrent("ERROR");
-    // }
+    updateCalculator((prevCalculator) => ({
+      ...prevCalculator,
+      current: -calculator.current,
+    }));
   };
 
   const compute = () => {
     let result;
-    let previousNumber = parseFloat(prevoius);
-    let currentNumber = parseFloat(current);
+    let previousNumber = parseFloat(calculator.prevoius);
+    let currentNumber = parseFloat(calculator.current);
     if (isNaN(previousNumber) || isNaN(currentNumber)) return;
-    switch (operations) {
+    switch (calculator.operations.operator) {
       case "/":
         result =
           currentNumber === 0
@@ -238,62 +306,113 @@ function Calculator() {
     const value = el;
     console.log("here is the value", value);
     if (value === ".") {
-      if (current.includes(".")) {
+      if (calculator.current.includes(".")) {
         return;
       } else {
-        if (current === "") {
-          setCurrent("0.");
+        if (calculator.current === "") {
+          updateCalculator((prevCalculator) => ({
+            ...prevCalculator,
+            current: "0.",
+          }));
         }
       }
     } else {
-      if (current.length < 12) {
-        setCurrent(current + value);
+      if (calculator.current.length < 12) {
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          current: calculator.current + value,
+        }));
       }
     }
   };
 
-  const chooseOperationHandler = (el) => {
-    if (current === "") {
-      setPrevoius("0");
-      setOperations(el);
-    } else if (current === ".") {
-      setPrevoius("0");
-      setOperations(el);
-    } else if (equal) {
-      setEqual("");
-      setSecondNum("");
-      setOperations(el);
-      setPrevoius(current);
-    } else if (prevoius) {
-      // setPrevoius(current);
-      setOperations(el);
+  const chooseOperationHandler = (opr, oprsign) => {
+    if (calculator.current === "") {
+      if (calculator.prevoius !== 0) {
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          operations: { operator: opr, sign: oprsign },
+        }));
+      } else {
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          prevoius: "0",
+          operations: { operator: opr, sign: oprsign },
+        }));
+      }
+    } else if (calculator.current === ".") {
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        prevoius: "0",
+        operations: { operator: opr, sign: oprsign },
+      }));
+    } else if (calculator.equal) {
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        equal: "",
+        seconNum: "",
+        operations: { operator: opr, sign: oprsign },
+        prevoius: calculator.current,
+      }));
+    } else if (calculator.prevoius) {
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        operations: { operator: opr, sign: oprsign },
+      }));
       let value = compute();
-      setPrevoius(value);
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        prevoius: value,
+      }));
     } else {
-      setPrevoius(current);
-      setOperations(el);
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        prevoius: calculator.current,
+        operations: { operator: opr, sign: oprsign },
+      }));
     }
-    setOperations(el);
-
-    setCurrent("");
+    updateCalculator((prevCalculator) => ({
+      ...prevCalculator,
+      operations: { operator: opr, sign: oprsign },
+      current: "",
+    }));
   };
 
   const equalHandler = (value) => {
     if (
       value === undefined ||
-      current === null ||
+      calculator.current === null ||
       value == null ||
-      current === undefined
+      calculator.current === undefined
     )
       return;
     if (value === "=") {
-      if (current === "") return;
-      if (current === "0.") setPrevoius("0");
+      if (calculator.current === "") return;
+      if (calculator.current === "0.") {
+        updateCalculator((prevCalculator) => ({
+          ...prevCalculator,
+          prevoius: "0",
+        }));
+      }
       let ans = compute();
-      setOperations(operations);
-      prevoius ? setSecondNum(current) : setPrevoius(current);
-      setEqual(value);
-      setCurrent(ans);
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        operations: calculator.operations,
+      }));
+      calculator.prevoius
+        ? updateCalculator((prevCalculator) => ({
+            ...prevCalculator,
+            seconNum: calculator.current,
+          }))
+        : updateCalculator((prevCalculator) => ({
+            ...prevCalculator,
+            prevoius: calculator.current,
+          }));
+      updateCalculator((prevCalculator) => ({
+        ...prevCalculator,
+        equal: value,
+        current: ans,
+      }));
     }
   };
 
@@ -349,7 +468,11 @@ function Calculator() {
     {
       value: <PiDivideLight />,
       opr: true,
-      onclick: () => chooseOperationHandler("/"),
+      onclick: () =>
+        chooseOperationHandler(
+          "/",
+          <PiDivideLight style={{ width: "10px", height: "10px" }} />
+        ),
     },
     {
       value: "7",
@@ -366,7 +489,11 @@ function Calculator() {
     {
       value: <RxCross1 />,
       opr: true,
-      onclick: () => chooseOperationHandler("*"),
+      onclick: () =>
+        chooseOperationHandler(
+          "*",
+          <RxCross1 style={{ width: "10px", height: "10px" }} />
+        ),
     },
     {
       value: "4",
@@ -383,7 +510,11 @@ function Calculator() {
     {
       value: <GoDash />,
       opr: true,
-      onclick: () => chooseOperationHandler("-"),
+      onclick: () =>
+        chooseOperationHandler(
+          "-",
+          <GoDash style={{ width: "10px", height: "10px" }} />
+        ),
     },
     {
       value: "1",
@@ -400,7 +531,11 @@ function Calculator() {
     {
       value: <GoPlus />,
       opr: true,
-      onclick: () => chooseOperationHandler("+"),
+      onclick: () =>
+        chooseOperationHandler(
+          "+",
+          <GoPlus style={{ width: "10px", height: "10px" }} />
+        ),
     },
     {
       value: (
@@ -428,6 +563,11 @@ function Calculator() {
 
   return (
     <div className="main">
+      <div className="backToHome">
+        <Link to="/">
+          <FcHome style={{ width: "50px", height: "50px" }} />
+        </Link>
+      </div>
       <div className="calculator">
         <div className="display">
           <div
@@ -466,16 +606,21 @@ function Calculator() {
             <h5>Standerd</h5>
           </div>
           <div style={{ maxWidth: "330px" }}>
-            <div className="h4" style={{ height: "30px" }}>
-              {prevoius}
-
-              {operations}
-
-              {seconNum ? seconNum : math}
-
-              {equal}
+            <div className="h4">
+              <div>{calculator.prevoius}</div>
+              {calculator.operations && <div>{calculator.operations.sign}</div>}
+              <div>
+                {calculator.seconNum ? calculator.seconNum : calculator.math}
+              </div>
+              <div>{calculator.equal}</div>
             </div>
-            <div className="h1">{current ? current : "0"}</div>
+            <div className="h1">
+              {calculator.current
+                ? calculator.current
+                : calculator.prevoius
+                ? calculator.prevoius
+                : 0}
+            </div>
           </div>
         </div>
         <div className="numberpad">

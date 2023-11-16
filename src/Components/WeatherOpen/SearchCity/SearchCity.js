@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./SearchCity.css";
 import axios from "axios";
-import { ContextSearch } from "../../Context/SearchContext";
+import { ContextApp } from "../../../AppContext/AppContext";
 
 function SearchCity() {
+  
   const [allCity, setAllCity] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [wordEntered, setWordEntered] = useState("");
   const [showResults, setShowResults] = useState(true);
 
-  const { searchResult, setDataAvailable } = useContext(ContextSearch);
+  const { searchResult, setDataAvailable, wordEntered, setWordEntered } = useContext(ContextApp);
 
   useEffect(() => {
     axios
@@ -52,15 +52,15 @@ function SearchCity() {
           maxLength={100}
           value={wordEntered}
           onChange={handleFilter}
-          onKeyDown={
-            (e)=>{
-              if(e.key==="Enter") {
-                searchResult(wordEntered);
-                  setShowResults(false);
-                  setWordEntered(wordEntered);
-              }
-            }
-          }
+          // onKeyDown={
+          //   (e)=>{
+          //     if(e.key==="Enter") {
+          //       searchResult(wordEntered);
+          //         setShowResults(false);
+          //         setWordEntered(wordEntered);
+          //     }
+          //   }
+          // }
         />
       </div>
       {showResults && filteredData.length !== 0 && (
